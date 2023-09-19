@@ -156,9 +156,9 @@ public:
             os << rand.array[i].p << " ";
         }
         os << " MO X= " << rand.getMean('x') << " ";
-        os << "Disp X= " << rand.getMean('x') << " ";
+        os << "Disp X= " << rand.getDispersion('x') << " ";
         os << "MO Y= " << rand.getMean('y') << " ";
-        os << "Disp Y= " << rand.getMean('y') << " ";
+        os << "Disp Y= " << rand.getDispersion('y') << " ";
         os << "MonteKarlo= " << rand.getMonteCarlo();
         return os;
     }
