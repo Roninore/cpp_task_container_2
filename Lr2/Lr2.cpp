@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <string>
 #include <iomanip>
-using namespace std;
 
 
 // Пара значений дискретной случайной 
@@ -24,12 +23,12 @@ struct Pair {
         p = Data.p;
         return *this;
     }
-    friend ostream& operator<< (std::ostream& stream, const Pair& item)
+    friend std::ostream& operator<< (std::ostream& stream, const Pair& item)
     {
         stream << "(" << item.x << "," << item.p << ")";
         return stream;
     }
-    friend istream& operator>> (std::istream& stream, Pair& item)
+    friend std::istream& operator>> (std::istream& stream, Pair& item)
     {
         stream >> item.x >> item.p;
         return stream;
@@ -115,10 +114,10 @@ public:
     * Удаляет последний элемент массива.
     * @return Удаленный элемент
     */
-    Pair pop() throw(out_of_range)
+    Pair pop() throw(std::out_of_range)
     {
         if (this->length == 0)
-            throw out_of_range("Массив уже пуст");
+            throw std::out_of_range("Массив уже пуст");
         Pair deletedValue = this->array[this->length];
         this->length -= 1;
         // Удаляем пустые ячейки, если их слишком много.
@@ -129,10 +128,10 @@ public:
         return deletedValue;
     }
 
-    Pair& operator[] (const int index) throw(out_of_range)
+    Pair& operator[] (const int index) throw(std::out_of_range)
     {
         if (index < 0 || index >= this->length)
-            throw out_of_range("Индекс за пределами массива");
+            throw std::out_of_range("Индекс за пределами массива");
         return this->array[index];
     }
 
@@ -146,12 +145,12 @@ public:
         return *this;
     }
 
-    friend ostream& operator<< (ostream& os, Rand& rand) {
-        cout << "argument ";
+    friend std::ostream& operator<< (std::ostream& os, Rand& rand) {
+        std::cout << "argument ";
         for (int i = 0; i < rand.length; i++) {
             os << rand.array[i].x << " ";
         }
-        os << endl << "function ";
+        os << std::endl << "function ";
         for (int i = 0; i < rand.length; i++) {
             os << rand.array[i].p << " ";
         }
@@ -222,7 +221,7 @@ public:
             else if (varType == 'y' || varType == 'p')
                 value = this->array[i].p;
             else
-                throw invalid_argument("Неверное значение параметра varType");
+                throw std::invalid_argument("Неверное значение параметра varType");
             
             if (inSquare)
                 value *= value;
@@ -238,7 +237,7 @@ public:
     double getDispersion(char varType = 'x')
     {
         if (!(varType == 'x' || varType == 'y' || varType == 'p'))
-            throw invalid_argument("Неверное значение параметра varType");
+            throw std::invalid_argument("Неверное значение параметра varType");
 
         double dispersion = this->getMean(varType, true) - pow(this->getMean(varType), 2);
         return dispersion;
@@ -265,7 +264,7 @@ private:
     * Пересоздает массив
     * @return - Новый динамический массив
     */
-    Pair* recreateArray(Pair* array, int length, int capacity, bool clear = false) throw(bad_alloc)
+    Pair* recreateArray(Pair* array, int length, int capacity, bool clear = false) throw(std::bad_alloc)
     {
         try {
             Pair* newArray = new Pair[capacity];
@@ -275,8 +274,8 @@ private:
                 delete[] array;
             return newArray;
         }
-        catch (bad_alloc e) {
-            cout << "Ошибка выделения памяти " << e.what() << endl;
+        catch (std::bad_alloc e) {
+            std::cout << "Ошибка выделения памяти " << e.what() << std::endl;
             exit(0);
         }
         
@@ -300,14 +299,14 @@ int main()
 {
     setlocale(LC_ALL, "rus");
     int n;
-    cin >> n;
+    std::cin >> n;
     Pair* inputArray = new Pair[n];
     for (int i = 0; i < n; i++)
-        cin >> inputArray[i].x;
+        std::cin >> inputArray[i].x;
     for (int i = 0; i < n; i++)
-        cin >> inputArray[i].p;
+        std::cin >> inputArray[i].p;
     Rand rand = Rand(inputArray, n);
-    cout << "input= " << rand;
+    std::cout << "input= " << rand;
 
     return 0;
 }
